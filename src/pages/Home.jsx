@@ -3,10 +3,16 @@ import { Link } from 'react-router-dom';
 
 function Home() {
   return (
-    <div className="flex gap-2 justify-center items-center">
-      <Link to={'./Lab1'}>Lab1</Link>
-
-      <Link to={'./Lab2'}>Lab2</Link>
+    <div className="flex gap-5 justify-center items-center h-screen flex-col">
+      <p className="text-2xl"> وين تبي تروح</p>
+      <div className="flex gap-5">
+        <Link to={'./Lab1'}>
+          <button className="btn btn-primary btn-lg">Lab 1</button>
+        </Link>
+        <Link to={'./Lab2'}>
+          <button className="btn btn-primary btn-lg">Lab2</button>
+        </Link>
+      </div>
     </div>
   );
 }
