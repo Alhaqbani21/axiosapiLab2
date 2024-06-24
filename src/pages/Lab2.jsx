@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CardLab2 from '../components/CardLab2';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Lab2() {
   const [data, setdata] = useState([]);
@@ -29,21 +30,28 @@ function Lab2() {
   }
 
   return (
-    <div className="flex flex-wrap justify-center items-center gap-5 p-5">
-      <h1>Rick and Morty images</h1>
+    <div className="flex flex-col justify-center items-center">
+      <div className="flex gap-2">
+        <Link to={'../Lab1'}>Lab1</Link>
+
+        <Link to={'../Lab2'}>Lab2</Link>
+      </div>
       <div className="flex flex-wrap justify-center items-center gap-5 p-5">
-        {data.map((item) => {
-          return (
-            <CardLab2
-              key={item.id}
-              img={item.image}
-              title={item.name}
-              onClick={(e) => {
-                navigate(`./${item.id}`);
-              }}
-            />
-          );
-        })}
+        <h1>Rick and Morty images</h1>
+        <div className="flex flex-wrap justify-center items-center gap-5 p-5">
+          {data.map((item) => {
+            return (
+              <CardLab2
+                key={item.id}
+                img={item.image}
+                title={item.name}
+                onClick={(e) => {
+                  navigate(`./${item.id}`);
+                }}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );
