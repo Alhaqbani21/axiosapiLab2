@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 function Details() {
   const [data, setdata] = useState([]);
   const { id } = useParams();
+  document.title = 'Details';
 
   useEffect(() => {
     fetchData('https://666061a45425580055b3a3d4.mockapi.io/lab2');

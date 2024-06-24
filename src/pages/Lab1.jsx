@@ -7,6 +7,7 @@ import axios from 'axios';
 
 function Lab1() {
   const [data, setdata] = useState([]);
+  document.title = 'Lab1';
   useEffect(() => {
     useFetchData('https://rickandmortyapi.com/api/character');
   }, []);

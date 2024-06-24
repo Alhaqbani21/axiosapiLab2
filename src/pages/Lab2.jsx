@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 function Lab2() {
   const [data, setdata] = useState([]);
+  document.title = 'Lab2';
   const navigate = useNavigate();
   useEffect(() => {
     fetchData('https://666061a45425580055b3a3d4.mockapi.io/lab2');
