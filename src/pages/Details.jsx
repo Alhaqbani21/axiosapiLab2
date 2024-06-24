@@ -19,7 +19,7 @@ function Details() {
       .then(function (response) {
         // handle success
 
-        const dataFound = response.data.find((e) => e.id === Number(id));
+        const dataFound = response.data.find((e) => e.id === id);
 
         console.log(dataFound);
         setdata(dataFound);

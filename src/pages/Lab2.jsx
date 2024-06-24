@@ -11,6 +11,14 @@ function Lab2() {
   useEffect(() => {
     fetchData('https://666061a45425580055b3a3d4.mockapi.io/lab2');
   }, []);
+  function deleteItem(id) {
+    axios
+      .delete(`https://666061a45425580055b3a3d4.mockapi.io/lab2/${id}`)
+      .then((response) => {
+        console.log(response);
+        setdata(data.filter((data) => data.id !== id));
+      });
+  }
 
   function fetchData(url) {
     axios
@@ -48,6 +56,9 @@ function Lab2() {
                 title={item.name}
                 onClick={(e) => {
                   navigate(`./${item.id}`);
+                }}
+                onClickDel={() => {
+                  deleteItem(item.id);
                 }}
               />
             );

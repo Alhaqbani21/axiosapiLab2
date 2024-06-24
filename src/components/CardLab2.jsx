@@ -13,6 +13,9 @@ function CardLab2(props) {
           <button onClick={props.onClick} className="btn btn-primary">
             Show Details
           </button>
+          <button onClick={props.onClickDel} className="btn bg-red-900">
+            Delete
+          </button>
         </div>
       </div>
     </div>
