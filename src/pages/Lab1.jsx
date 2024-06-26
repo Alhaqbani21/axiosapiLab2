@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import Card from '../components/Card';
 import axios from 'axios';
+import NavBar from '../components/NavBar';
 
 function Lab1() {
   const [data, setdata] = useState([]);
@@ -30,11 +31,7 @@ function Lab1() {
   }
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="flex gap-2">
-        <Link to={'../Lab1'}>Lab1</Link>
-
-        <Link to={'../Lab2'}>Lab2</Link>
-      </div>
+      <NavBar />
       <div className="flex justify-center items-center flex-wrap p-5 gap-5">
         {data.map((item) => {
           return <Card key={item.id} img={item.image} title={item.name} />;

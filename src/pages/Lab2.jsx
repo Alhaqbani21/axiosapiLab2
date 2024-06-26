@@ -2,21 +2,47 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CardLab2 from '../components/CardLab2';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import NavBar from '../components/NavBar';
+import SearchInput from '../components/SearchInput';
 
 function Lab2() {
-  const [data, setdata] = useState([]);
-  document.title = 'Lab2';
-  const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
+  const [deleteAlert, setdeleteAlert] = useState(false);
+
   useEffect(() => {
     fetchData('https://666061a45425580055b3a3d4.mockapi.io/lab2');
   }, []);
+
+  useEffect(() => {
+    searchCharacter();
+  }, [searchInput, data]);
+
+  function searchCharacter() {
+    if (searchInput !== '') {
+      const filtered = data.filter((character) =>
+        character.name.toLowerCase().includes(searchInput.toLowerCase())
+      );
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(data);
+    }
+  }
+
+  document.title = 'Lab2';
+  const navigate = useNavigate();
+
   function deleteItem(id) {
     axios
       .delete(`https://666061a45425580055b3a3d4.mockapi.io/lab2/${id}`)
       .then((response) => {
         console.log(response);
-        setdata(data.filter((data) => data.id !== id));
+        setData(data.filter((data) => data.id !== id));
+        setdeleteAlert(true);
+        setTimeout(function () {
+          setdeleteAlert(false);
+        }, 5000);
       });
   }
 
@@ -25,9 +51,9 @@ function Lab2() {
       .get(url)
       .then(function (response) {
         // handle success
-
         console.log(response.data);
-        setdata(response.data);
+        setData(response.data);
+        setFilteredData(response.data); // Initialize filteredData
       })
       .catch(function (error) {
         // handle error
@@ -40,29 +66,52 @@ function Lab2() {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="flex gap-2">
-        <Link to={'../Lab1'}>Lab1</Link>
+      <NavBar />
+      {deleteAlert && (
+        <div className="alert alert-success fixed z-50 w-60 top-20 right-5">
+          <span>Item has been deleted</span>
+        </div>
+      )}
 
-        <Link to={'../Lab2'}>Lab2</Link>
-      </div>
-      <div className="flex flex-wrap justify-center items-center gap-5 p-5">
-        <h1>Rick and Morty images</h1>
-        <div className="flex flex-wrap justify-center items-center gap-5 p-5">
-          {data.map((item) => {
-            return (
-              <CardLab2
-                key={item.id}
-                img={item.image}
-                title={item.name}
-                onClick={(e) => {
-                  navigate(`./${item.id}`);
-                }}
-                onClickDel={() => {
-                  deleteItem(item.id);
-                }}
-              />
-            );
-          })}
+      <div className="flex flex-wrap justify-center items-center gap-5 p-5 flex-col">
+        <div className=" flex flex-col justify-center items-center">
+          <SearchInput
+            onChange={(e) => setSearchInput(e.target.value)}
+            value={searchInput}
+          />
+          <div className=" w-[100%] ">
+            <div className="divider"></div>
+            <div className="text-center tracking-widest my-5 text-neutral">
+              To Add New Character
+            </div>
+          </div>
+          <button
+            className="btn  btn-success text-white max-md:text-sm"
+            onClick={() => navigate('../newcharacter')}
+          >
+            Add Character
+          </button>
+        </div>
+
+        <div className="flex flex-wrap justify-center items-center gap-5 max-w-screen">
+          {filteredData.length > 0 ? (
+            <div className="flex flex-wrap justify-center items-center gap-10  ">
+              {filteredData.map((item) => (
+                <CardLab2
+                  key={item.id}
+                  img={item.image}
+                  title={item.name}
+                  onClick={() => navigate(`./${item.id}`)}
+                  onClickDel={() => deleteItem(item.id)}
+                  onClickEdit={() => {
+                    navigate(`../edit/${item.id}`);
+                  }}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-2xl text-red-500">Ooops No Result</div>
+          )}
         </div>
       </div>
     </div>

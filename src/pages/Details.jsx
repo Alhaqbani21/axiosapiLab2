@@ -1,13 +1,15 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import NavBar from '../components/NavBar';
 
 function Details() {
   const [data, setdata] = useState([]);
   const { id } = useParams();
   document.title = 'Details';
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData('https://666061a45425580055b3a3d4.mockapi.io/lab2');
@@ -35,33 +37,27 @@ function Details() {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="flex gap-2">
-        <Link to={'../Lab1'}>Lab1</Link>
+      <NavBar />
 
-        <Link to={'../Lab2'}>Lab2</Link>
-      </div>
       <div className="hero bg-base-200 min-h-screen">
-        <div className="hero-content flex-col lg:flex-row">
+        <div className="hero-content flex-col lg:flex-row bg-base-300 rounded-lg p-5">
           <img src={data.image} className="max-w-sm rounded-lg shadow-2xl" />
-          <div>
+          <div className="flex flex-col justify-center gap-5 ">
             <h1 className="text-5xl font-bold">
               Name: <span className="text-blue-400">{data.name}</span>
             </h1>
-            <h1 className="text-5xl font-bold">
-              status: <span className="text-blue-400">{data.status}</span>
-            </h1>
-            <h1 className="text-5xl font-bold">
-              species: <span className="text-blue-400">{data.species}</span>
-            </h1>
+
             <h1 className="text-5xl font-bold">
               gender: <span className="text-blue-400">{data.gender}</span>
             </h1>
-            <h1 className="text-5xl font-bold">
-              hair: <span className="text-blue-400">{data.hair}</span>
-            </h1>
-            <h1 className="text-5xl font-bold">
-              origin: <span className="text-blue-400">{data.origin}</span>
-            </h1>
+            <button
+              onClick={() => {
+                navigate('../Lab2');
+              }}
+              className="btn btn-neutral btn-lg w-[50%]"
+            >
+              Go back
+            </button>
           </div>
         </div>
       </div>
